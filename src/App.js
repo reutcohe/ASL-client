@@ -1,24 +1,35 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+import HeaderAdmin from './comps_admin/headerAdmin';
+// בשביל הודעות טוסט צריך קונטיינר שיהיה באפ ואת
+// הסי אס אס שלו
+import {ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import { adminRoutes } from './comps_admin/adminRoutes';
+import ClientNav from './client_comps/clientNav.js';
+import Home from './client_comps/home';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      
+      <Routes>
+        <Route path="/admin/*" element={<HeaderAdmin />} />
+        <Route path="/*" element={<ClientNav />} />
+      </Routes>
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/*" element={<h2>Page 404</h2>}/>
+
+        {/* ADMIN ROUTES */}
+        {adminRoutes()}
+  
+      </Routes>
+      <ToastContainer position="top-left" theme="colored" />
+    </BrowserRouter>
   );
 }
 
