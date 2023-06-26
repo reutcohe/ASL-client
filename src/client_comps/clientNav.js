@@ -1,34 +1,64 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context';
 
 export default function ClientNav() {
+  const token = localStorage.getItem('token');
+  const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
+  useEffect(() => {
+   
+  },[isLoggedIn])
+
+
   return (
-    <header className='container-fluid client-header bg-light shadow'>
-    <div className="container ">
-      <div className="row align-items-center">
-        <div className="logo col-auto">
-          <h2><Link to="/">We foods</Link></h2>
+    <header className="container-fluid client-header bg-light shadow ">
+      <div className="container">
+        <div className="row align-items-center justify-content-between mt-3">
+          <div className="col-auto d-flex align-items-center">
+            <h2 >
+              <Link to="/">SignMaster</Link>
+            </h2>
+          </div>
+          <div className="col-auto">
+            <div className="user-picture">
+              {(token!=null) ? (
+                // <img src={localStorage.getItem('userPicture')} alt="User" />
+              <h2 onClick={()=>{
+                localStorage.setItem('token', null);
+                setIsLoggedIn(false)
+                console.log(isLoggedIn)
+              }}>dd</h2>
+              
+                ) : (
+                <i className="fa fa-user fa-3x" aria-hidden="true"></i>)}
+
+            </div>
+          </div>
         </div>
-        <nav className='d-flex col justify-content-between align-items-center'>
-        
-          <ul className='nav'>
-            <li>
-              <Link to="/test/upload">upload test</Link>
-            </li>
-            {/* <li>
-              <Link to="/test/ownHook">hook 1</Link>
-            </li>
-            <li>
-              <Link to="/test/lazy1">lazy 1</Link>
-            </li>
-            <li>
-              <Link to="/test/lazyApi">lazy api</Link>
-            </li> */}
-          </ul> 
-         
-        </nav>
       </div>
-    </div>
-  </header>
-  )
+      <div className="container">
+        <div className="row">
+          <nav className="col">
+            <ul className="nav justify-content-center">
+              <li className="nav-item">
+                <Link to="/" className="icon-link mx-5">
+                  <i className="fa fa-home fa-3x" aria-hidden="true"></i>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/user" className="icon-link mx-5">
+                  <i className="fa fa-user fa-3x" aria-hidden="true"></i>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/trophy" className="icon-link mx-5">
+                  <i className="fa fa-trophy fa-3x" aria-hidden="true"></i>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
 }
