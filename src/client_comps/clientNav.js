@@ -4,10 +4,10 @@ import { AuthContext } from '../context';
 
 export default function ClientNav() {
   const token = localStorage.getItem('token');
-  const {isLoggedIn,setIsLoggedIn}=useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   useEffect(() => {
-   
-  },[isLoggedIn])
+
+  }, [isLoggedIn])
 
 
   return (
@@ -16,22 +16,22 @@ export default function ClientNav() {
         <div className="row align-items-center justify-content-between mt-3">
           <div className="col-auto d-flex align-items-center">
             <h2 >
-              <Link to="/">SignMaster</Link>
+              <Link to="/"><img src="../logo.png" alt="SignMaster Logo" width="100px"/></Link>
             </h2>
           </div>
           <div className="col-auto">
             <div className="user-picture">
-              {(token!=null) ? (
+              {token == "null" ? (
                 // <img src={localStorage.getItem('userPicture')} alt="User" />
-              <h2 onClick={()=>{
-                localStorage.setItem('token', null);
-                setIsLoggedIn(false)
-                console.log(isLoggedIn)
-              }}>dd</h2>
-              
-                ) : (
-                <i className="fa fa-user fa-3x" aria-hidden="true"></i>)}
 
+                <i className="fa fa-user fa-3x" aria-hidden="true"></i>
+
+              ) : (
+                <h2 onClick={() => {
+                  localStorage.setItem('token', null);
+                  setIsLoggedIn(false)
+                  console.log(isLoggedIn)
+                }}>dd</h2>)}
             </div>
           </div>
         </div>

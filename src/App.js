@@ -14,6 +14,8 @@ import Learn from './learn/learn';
 import LogIn from './users/logIn';
 import Register from './users/register';
 import { AuthProvider } from './context';
+// מפעיל את האפשרות באקספרס לעבוד עם קבצים
+
 
 
 

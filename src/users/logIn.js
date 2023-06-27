@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { API_URL, doApiMethod } from '../services/apiService';
+import { AuthContext } from '../context';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  useEffect(() => {
+
+  }, [isLoggedIn])
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,6 +20,7 @@ export default function Login() {
       const response = await doApiMethod(`${API_URL}/users/login`, 'POST', bodyData);
       // Handle successful login response
       console.log('Login successful:', response.data);
+      setIsLoggedIn(true)
       localStorage.setItem('token', response.data);
     } catch (error) {
       // Handle login error

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,  useRef  } from 'react';
 import { API_URL, doApiMethod } from '../services/apiService';
 
 export default function SignUp() {
@@ -9,29 +9,41 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-
+  const fileRef = useRef();
+  
   const handleSignUp = async(e) => {
+   
+
     e.preventDefault();
    
     try {
-    let bodyData;
+      console.log(fileRef.current.files[0])
+      if(fileRef.current.files.length == 0){
+        return alert("you need to choose file and then upload it")
+      }
+      let myFile = fileRef.current.files[0];
+      if(myFile.size > 2 * 1024 * 1024){
+        return alert("file too big")
+      }
+    let bodyData= new FormData();
     bodyData={ email: email,
       fullName : {firstName:firstName,
         lastName:lastName
       },
-      password:password
+      password:password,
+    
+    //  img:profilePicture
     }
-
+    bodyData.append("myFile",myFile)
     console.log(bodyData)
     let url = API_URL + "/users/";
     let resp = await doApiMethod(url,'POST',bodyData)
     console.log(resp.data);
   }
   catch (err) {
-    alert("There problem, or you try to delete superAdmin");
 
     console.log(err.response);
-    // alert("There problem , try again later")
+    alert("There problem , try again later")
   }
   };
 
@@ -124,9 +136,10 @@ export default function SignUp() {
           <input
             type="file"
             id="profilePicture"
-            accept="image/*"
+            // accept="image/*"
             className="form-control"
-            onChange={handleProfilePictureChange}
+            ref={fileRef}
+            // onChange={handleProfilePictureChange}
           />
         </div>
         <button type="submit" className="btn btn-primary">
